@@ -1,20 +1,14 @@
 import express from "express";
 
-import router from "./routes";
+import errorPageNotFound from "./middlewares/errorPageNotFound";
+import router from "./routes/code.routes";
 
 require("dotenv/config");
 
 const app = express();
 
 app.use(express.json());
-
 app.use(router);
-
-app.use((req, res) => {
-  return res.status(404).json({
-    status: 404,
-    error: "Aparentemente está rota não existe!",
-  });
-});
+app.use(errorPageNotFound);
 
 app.listen(process.env.PORT, () => console.log("Server is running!"));
